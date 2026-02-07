@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Challenge Deck PRD — Discord Server Month Event</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --card: #121a33;
+      --text: #e8ecff;
+      --muted: #b8c0e6;
+      --accent: #7aa2ff;
+      --border: rgba(255,255,255,.10);
+      --code: #0f1730;
+    }
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #f6f7fb;
+        --card: #ffffff;
+        --text: #111827;
+        --muted: #4b5563;
+        --accent: #2563eb;
+        --border: rgba(17,24,39,.12);
+        --code: #f3f4f6;
+      }
+    }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .wrap {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 40px 20px 80px;
+    }
+    header {
+      padding: 18px 18px 14px;
+      background: linear-gradient(180deg, rgba(122,162,255,.18), transparent);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      margin-bottom: 18px;
+    }
+    h1 {
+      font-size: 28px;
+      margin: 0 0 8px;
+      letter-spacing: .2px;
+    }
+    .meta {
+      color: var(--muted);
+      font-size: 14px;
+      margin: 0;
+    }
+    nav {
+      margin-top: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    nav a {
+      color: var(--text);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      padding: 8px 10px;
+      border-radius: 999px;
+      font-size: 13px;
+      background: rgba(255,255,255,.03);
+    }
+    nav a:hover { border-color: rgba(122,162,255,.55); }
+    section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 18px 18px 8px;
+      margin-top: 14px;
+    }
+    h2 {
+      margin: 0 0 10px;
+      font-size: 18px;
+      color: var(--accent);
+    }
+    h3 {
+      margin: 16px 0 8px;
+      font-size: 15px;
+    }
+    ul, ol { margin: 0 0 12px 20px; }
+    li { margin: 6px 0; }
+    code, pre {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
+    }
+    pre {
+      background: var(--code);
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      overflow: auto;
+    }
+    .pill {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 12px;
+      margin-right: 8px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    @media (max-width: 720px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+    .callout {
+      border-left: 4px solid var(--accent);
+      padding: 10px 12px;
+      background: rgba(122,162,255,.08);
+      border-radius: 12px;
+      margin: 10px 0 12px;
+      color: var(--muted);
+    }
+    footer {
+      margin-top: 22px;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Challenge Deck PRD — Discord Server Month Event</h1>
+      <p class="meta">
+        <span class="pill">Event: 1 month</span>
+        <span class="pill">Platform: Website</span>
+        <span class="pill">Audience: Discord server members</span><br/>
+        Last updated: 2026-02-03
+      </p>
+      <nav>
+        <a href="#key-goals">Key Goals</a>
+        <a href="#tracks">Tracks</a>
+        <a href="#auth">Auth & Sessions</a>
+        <a href="#daily-flow">Daily Flow</a>
+        <a href="#cards">Cards & Timer</a>
+        <a href="#verification">Main + Quiz</a>
+        <a href="#hints">Hints</a>
+        <a href="#economy">XP & Coins</a>
+        <a href="#leaderboard">Leaderboard</a>
+        <a href="#avatar">Avatar & Champion Track</a>
+        <a href="#pages">Pages</a>
+        <a href="#out-of-scope">Out of Scope</a>
+      </nav>
+    </header>
+
+    <section id="key-goals">
+      <h2>Key Goals</h2>
+      <ul>
+        <li><strong>Fun, repeatable daily routine:</strong> only 3 cards per day.</li>
+        <li><strong>Fair competition:</strong> wins require correct answers (main question + quiz), not external proof.</li>
+        <li><strong>Low friction:</strong> email/password login, persistent sessions (30 days).</li>
+        <li><strong>Event energy:</strong> monthly leaderboard + streak bonuses + champion-track avatar decoration.</li>
+        <li><strong>Learning value (for builder):</strong> clear full-stack scope (auth, DB, state, scoring, leaderboard).</li>
+      </ul>
+      <div class="callout">
+        This is a Discord-server event website. Members access it via a link posted in the server.
+      </div>
+    </section>
+
+    <section id="tracks">
+      <h2>Tracks</h2>
+      <p>Users must pick <strong>exactly 3 tracks</strong> each day from these 6:</p>
+      <div class="grid">
+        <div>
+          <h3>Technical</h3>
+          <ul>
+            <li>Coding</li>
+            <li>SQL</li>
+            <li>Software Engineering</li>
+             <li>Web & APIs</li>
+              <li>Cloud Basics</li>
+              <li>Security Basics</li>
+
+          </ul>
+        </div>
+        <div>
+          <h3>Fun / Knowledge</h3>
+          <ul>
+            <li>Global Knowledge</li>
+            <li>Anime</li>
+            <li>Games Knowledge</li>
+            <li>Science (Light)</li>
+            <li>Movies & TV</li>
+            <li>Sports</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="auth">
+      <h2>Authentication & Sessions</h2>
+      <ul>
+        <li><strong>Auth Gate:</strong> no content until user logs in / signs up.</li>
+        <li><strong>Sign up fields:</strong> name, email (unique), password (stored hashed).</li>
+        <li><strong>Persistent login:</strong> 30-day session with <em>sliding expiration</em> (each visit extends session).</li>
+        <li><strong>Logout:</strong> available at all times.</li>
+      </ul>
+    </section>
+
+<section id="daily-flow">
+  <h2>Daily Flow</h2>
+  <ol>
+    <li>User opens the site (already logged in).</li>
+    <li>User must choose <strong>exactly 3</strong> tracks.</li>
+    <li>Click <strong>Generate Today’s Deck</strong>.</li>
+    <li>
+      System generates <strong>3 random cards</strong> from the <strong>three selected tracks only</strong>, with a fairness rule:
+      <strong>no more than 2 cards</strong> can come from the same track (no 3-of-a-kind).
+    </li>
+    <li>
+      <em>Example:</em> selected (Coding, SQL, Security) → possible deck:
+      (Coding, Coding, SQL) or (SQL, Security, Security) or (Coding, SQL, Security).
+    </li>
+    <li>Track selection is then <strong>locked for the day</strong>.</li>
+    <li>At the next day, the deck expires and the user must pick tracks again.</li>
+  </ol>
+  <div class="callout">
+    The deck is today-only and is fixed once generated.
+  </div>
+</section>
+
+
+    <section id="cards">
+      <h2>Cards & Timer</h2>
+
+      <h3>Start Rules</h3>
+      <ul>
+        <li>Card has a <strong>Preview</strong> screen.</li>
+        <li>To play, user presses <strong>Start</strong> and confirms: <em>No pause / no restart / no undo</em>.</li>
+      </ul>
+
+      <h3>Timer Rules</h3>
+      <ul>
+        <li>Timer is server-based: <code>started_at + duration</code>.</li>
+        <li>No pause.</li>
+        <li>User may leave the site; time continues.</li>
+      </ul>
+
+      <h3>Finish Button</h3>
+<ul>
+  <li><strong>Finish</strong> is available at all times during the challenge.</li>
+  <li>Pressing Finish shows a confirmation modal: <em>Ending early can’t be undone</em>.</li>
+</ul>
+
+
+      <h3>One Active Card</h3>
+      <ul>
+        <li>User cannot start a second card while one is in progress.</li>
+        <li>After finishing (or timing out while present), user can proceed to the next card.</li>
+      </ul>
+    </section>
+
+    <section id="verification">
+      <h2>Verification (No Proof) — Main Question + Mini Quiz</h2>
+
+      <h3>Main Question</h3>
+      <ul>
+        <li>Each card contains a <strong>Main Question</strong> that must be answered within the time limit.</li>
+        <li>If <strong>Main is wrong</strong> → immediate fail: no quiz, XP = 0.</li>
+        <li>If <strong>Main is correct</strong> → unlock the Mini Quiz.</li>
+      </ul>
+
+      <h3>Mini Quiz</h3>
+      <ul>
+        <li>3 questions, all <strong>directly related</strong> to the Main Question.</li>
+        <li>Pass threshold: <strong>2/3 correct</strong>.</li>
+      </ul>
+
+      <h3>Card Result → XP</h3>
+      <ul>
+        <li><strong>WIN</strong>: Main correct + Quiz pass (≥2/3) → <strong>XP = 3</strong></li>
+        <li><strong>PARTIAL</strong>: Main correct + Quiz fail → <strong>XP = 1</strong></li>
+        <li><strong>FAIL</strong>: Main wrong, not answered in time, or missed (below) → <strong>XP = 0</strong></li>
+      </ul>
+
+      <h3>Missed Rule</h3>
+      <ul>
+        <li>If the timer ends while the user is <strong>away</strong> (not present on the site) → <strong>MISSED</strong>, XP = 0, no quiz.</li>
+        <li>Presence detection will be defined during implementation (e.g., heartbeat).</li>
+      </ul>
+    </section>
+
+<section id="hints">
+  <h2>Hints</h2>
+  <ul>
+    <li>Hints are available <strong>after Start only</strong> (during play).</li>
+    <li>Daily limit: <strong>1 hint per day</strong> total (across all cards).</li>
+    <li>Using the hint reveals a single helpful clue related to the Main Question.</li>
+  </ul>
+</section>
+
+<section id="economy">
+  <h2>Economy — XP, Daily Win & Streak</h2>
+
+  <h3>XP per Card Result</h3>
+  <ul>
+    <li><strong>WIN</strong> → XP = 3</li>
+    <li><strong>PARTIAL</strong> → XP = 1</li>
+    <li><strong>FAIL</strong> → XP = 0</li>
+  </ul>
+
+  <h3>Daily Win</h3>
+  <ul>
+    <li><strong>Daily Win</strong> is achieved only if the user gets <strong>3 WINs</strong> that day.</li>
+    <li><strong>Win Streak</strong> = consecutive days with Daily Win.</li>
+  </ul>
+
+  <h3>Daily Win Bonus XP</h3>
+  <ul>
+    <li>Base: <strong>+5 XP</strong></li>
+    <li>Streak scaling: <code>+2 XP × (streak_day_count - 1)</code></li>
+    <li>Cap: streak bonus max <strong>+20 XP/day</strong> (so max daily bonus = +25 XP)</li>
+  </ul>
+</section>
+
+
+    <section id="leaderboard">
+      <h2>Leaderboard (Event Month)</h2>
+      <ul>
+        <li>Score = <strong>Total XP</strong> (includes Daily Win bonus XP).</li>
+        <li>Display:
+          <ul>
+            <li><strong>Top 10</strong> view</li>
+            <li><strong>All participants</strong> view (search + pagination)</li>
+          </ul>
+        </li>
+        <li>Tie-breakers (if same score):
+          <ol>
+            <li>Higher Daily Wins count</li>
+            <li>Higher Win Streak</li>
+            <li>Higher total Wins (XP=3 cards)</li>
+          </ol>
+        </li>
+      </ul>
+    </section>
+
+    <section id="avatar">
+      <h2>Avatar & Champion Track</h2>
+      <ul>
+        <li>User has an avatar (default placeholder; upload can be added later).</li>
+        <li><strong>Champion Track</strong> is computed over the last <strong>14 days</strong>:</li>
+      </ul>
+      <pre><code>Champion Track = track with highest WIN count (XP=3) over last 14 days
+Tie-breakers:
+  1) higher WIN count over last 7 days
+  2) most recent WIN
+  3) fixed ordering</code></pre>
+      <ul>
+        <li>Champion Track appears as a <strong>Top Decoration</strong> above the avatar (mascot vibe).</li>
+        <li>Mascots must be original (no copyrighted characters).</li>
+      </ul>
+    </section>
+
+    <section id="pages">
+      <h2>Required Pages (v1)</h2>
+      <ol>
+        <li>Login / Sign up</li>
+        <li>Today: pick 3 tracks → generate deck → show 3 cards</li>
+        <li>Card Preview</li>
+        <li>Focus Mode (timer + main question + hints)</li>
+        <li>Mini Quiz</li>
+        <li>Today Summary</li>
+        <li>Profile (avatar, streak, champion track, basic stats)</li>
+        <li>Leaderboard (Top 10 + all participants)</li>
+        <li>Event Info (start/end, days left, rules)</li>
+        <li>Final Results (after event ends)</li>
+      </ol>
+    </section>
+
+    <section id="out-of-scope">
+      <h2>Out of Scope (v1)</h2>
+      <ul>
+        <li>Discord OAuth / bot integration</li>
+        <li>Multi-server support</li>
+        <li>Payments</li>
+        <li>Full i18n (later: translate page button)</li>
+        <li>External proof uploads</li>
+        <li>Social feed / comments</li>
+      </ul>
+    </section>
+
+    <footer>
+      You can edit this HTML directly. If you want, we can also generate a matching PDF later from this same source.
+    </footer>
+  </div>
+</body>
+</html>
